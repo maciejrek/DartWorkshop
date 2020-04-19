@@ -2,42 +2,29 @@ import 'package:flutter/material.dart';
 
 import 'app_screens/home.dart';
 
-
 void main() => runApp(MaterialApp(
-  title:"Exploring UI widgets",
-  home: Scaffold(
-    appBar:AppBar(title:Text("Basic list view - meant only for few list items")),
-    body:getListView(),
-  ),
-));
+      title: "Exploring UI widgets",
+      home: Scaffold(
+        appBar: AppBar(title: Text("Long list")),
+        body: getListView()
+      ),
+    ));
 
+List<String> getListElements() =>
+    List<String>.generate(1000, (counter) => "Item $counter");
 
-Widget getListView(){
-  var listView = ListView(
-    children: <Widget>[
-      ListTile(
-        leading:Icon(Icons.landscape),
-        title: Text("Title text"),
-        subtitle:Text("Subtitle text"),
-        trailing: Icon(Icons.wb_sunny),
-        onTap:()=>debugPrint("Text"),
+Widget getListView() {
+  var listItems = getListElements();
+
+  var listView = ListView.builder(
+    itemBuilder: (context, index) => ListTile(
+      leading: Icon(Icons.arrow_right),
+      title: Text(listItems[index]),
+      onTap: () => debugPrint('${listItems[index]} was tapped')
 
       ),
-      ListTile(
-        leading:Icon(Icons.laptop_chromebook),
-        title: Text("laptop"),
-      ),
-      ListTile(
-        leading:Icon(Icons.phone_android),
-        title: Text("phone"),
-      ),
-      ListTile(
-        leading:Icon(Icons.laptop_mac),
-        title: Text("laptop mac"),
-      ),
-      Text("We can add any widget as a list element, like text"),
-      Container(color:Colors.red,height:50.0,child:Text("Or even container"))
-    ],
   );
   return listView;
 }
+
+// Long list are memory efficient, cause they load only items that we can actually see
