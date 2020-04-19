@@ -1,63 +1,109 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
-      title: "Stateful App Example",
-      home: FavouriteCity(),
+      title: 'Simple Interest Calculator App',
+      home: SIForm(),
     ));
 
-//this class is immutable
-class FavouriteCity extends StatefulWidget {
+class SIForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _FavouriteCityState();
+    return _SIFormState();
   }
 }
 
-//but the state is mutable
-class _FavouriteCityState extends State<FavouriteCity> {
-  String nameCity = "";
-  var _dropdownOptions = ["first", "second", "third"];
-  var _currentItemSelected = "first";
+class _SIFormState extends State<SIForm> {
+  var _currencies = ["Rupees", "Dollars", "Euro"];
+  final _minimalPadding = 5.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Stateful app example")),
-        body: Container(
-          margin: EdgeInsets.all(20.0),
-          child: Column(
+      appBar: AppBar(
+        title: Text("Simple Interest Calculator"),
+      ),
+      body: Container(
+          margin: EdgeInsets.all(_minimalPadding * 2),
+          child: ListView(
             children: <Widget>[
-              TextField(
-                onSubmitted: (String userInput) =>
-                    setState(() => nameCity = userInput),
-              ),
-              TextField(
-                onChanged: (String userInput) =>
-                    setState(() => nameCity = userInput),
-              ),
-              DropdownButton<String>(
-                items: _dropdownOptions
-                    .map(
-                        (String dropDownStringItem) => DropdownMenuItem<String>(
-                              value: dropDownStringItem,
-                              child: Text(dropDownStringItem),
-                            ))
-                    .toList(),
-                onChanged: (String newValueSelected) =>
-                    _dropDownItemSelected(newValueSelected),
-                value: _currentItemSelected,
+              getImageAsset(),
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: _minimalPadding, bottom: _minimalPadding),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Principal',
+                        hintText: 'Enter Principal e.g. 12000',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  )),
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: _minimalPadding, bottom: _minimalPadding),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Rate of Interest',
+                        hintText: 'In percent',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  )),
+              Padding(
+                padding: EdgeInsets.only(top: _minimalPadding,bottom:_minimalPadding),
+                child:Row(
+                children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: 'Term',
+                        hintText: 'Time in years',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  )),
+                  Container(width:_minimalPadding*5,),
+                  Expanded(
+                      child: DropdownButton<String>(
+                    items: _currencies
+                        .map((String value) =>
+                            DropdownMenuItem(value: value, child: Text(value)))
+                        .toList(),
+                    value: "Rupees",
+                    onChanged: (String newValueSelected) => null,
+                  ))
+                ],
+              )),
+              Padding(
+                padding: EdgeInsets.only(top: _minimalPadding,bottom:_minimalPadding),
+                child: Row(children: <Widget>[
+                  Expanded(
+                    child: RaisedButton(
+                      child:Text("Calculate"),
+                      onPressed:(){},
+                    ),
+                  ),
+                  Expanded(
+                    child: RaisedButton(
+                      child:Text("Reset"),
+                      onPressed:(){},
+                    ),
+                  )
+                ],)
               ),
               Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: Text(
-                    "Your city name is $nameCity",
-                    style: TextStyle(fontSize: 20.0),
-                  )),
+                padding: EdgeInsets.only(top: _minimalPadding,bottom:_minimalPadding),
+                child:Text("Todo text"),
+              )
             ],
-          ),
-        ));
+          )),
+    );
   }
 
-  void _dropDownItemSelected(String newValueSelected) =>
-      setState(() => this._currentItemSelected = newValueSelected);
+  Widget getImageAsset() {
+    AssetImage assetImage = AssetImage('images/wolf.png');
+    Image image = Image(image: assetImage, width: 125.0, height: 125.0);
+    return Container(
+        child: image, margin: EdgeInsets.all(_minimalPadding * 10));
+  }
 }
