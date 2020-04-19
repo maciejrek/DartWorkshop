@@ -69,8 +69,19 @@ class Home extends StatelessWidget {
                       ),
                     ))
                   ],
-                )
+                ),
+                MyImageAsset()
               ],
             )));
   }
+}
+
+class MyImageAsset extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    AssetImage assetImage = AssetImage('images/wolf.png');
+    Image image = Image(image:assetImage, width:250.0, height:250.0);
+    return Container(child:image);
+  }
+
 }
