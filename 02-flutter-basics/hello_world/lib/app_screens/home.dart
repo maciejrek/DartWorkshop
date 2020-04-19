@@ -70,18 +70,49 @@ class Home extends StatelessWidget {
                     ))
                   ],
                 ),
-                MyImageAsset()
+                MyImageAsset(),
+                MyButton(),
               ],
             )));
   }
 }
 
-class MyImageAsset extends StatelessWidget{
+class MyImageAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AssetImage assetImage = AssetImage('images/wolf.png');
-    Image image = Image(image:assetImage, width:250.0, height:250.0);
-    return Container(child:image);
+    Image image = Image(image: assetImage, width: 250.0, height: 250.0);
+    return Container(child: image);
   }
+}
 
+class MyButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 30.0),
+      width: 250.0,
+      height: 50.0,
+      child: RaisedButton(
+        color: Colors.deepOrange,
+        child: Text("My button text",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.white,
+              fontFamily: 'ComicNeue',
+              fontWeight: FontWeight.w700,
+            )),
+        elevation: 6.0,
+        onPressed: () => myFunc(context),
+      ),
+    );
+  }
+}
+
+void myFunc(BuildContext context) {
+  var alertDialog = AlertDialog(
+      title: Text("Title of alert dialog"),
+      content: Text("Content of alert dialog"));
+
+  showDialog(context: context, builder: (BuildContext context) => alertDialog);
 }
