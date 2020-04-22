@@ -4,7 +4,6 @@ import 'package:note_keeper/screens/note_detail.dart';
 class NoteList extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return NoteListState();
   }
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NoteDetail extends StatefulWidget {
-  String appBarTitle;
+  final String appBarTitle;
   NoteDetail(this.appBarTitle);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return NoteDetailState(this.appBarTitle);
   }
 }
@@ -17,13 +16,12 @@ class NoteDetailState extends State<NoteDetail> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  var _current_priority = _priorities[0];
+  var _currentPriority = _priorities[0];
 
   NoteDetailState(this.appBarTitle);
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
-    // TODO: implement build
     return WillPopScope(
     onWillPop:(){
       //Define what happens when user press back on device
@@ -54,7 +52,7 @@ class NoteDetailState extends State<NoteDetail> {
                           child: Text(dropDownStringItem));
                     }).toList(),
                     style: textStyle,
-                    value: _current_priority,
+                    value: _currentPriority,
                     onChanged: (valueSelectedByUser) {
                       setState(() {
                         debugPrint('User selected $valueSelectedByUser');
