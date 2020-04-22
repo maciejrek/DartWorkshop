@@ -1,27 +1,46 @@
 import 'package:flutter/material.dart';
 
 class NoteDetail extends StatefulWidget {
+  String appBarTitle;
+  NoteDetail(this.appBarTitle);
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return NoteDetailState();
+    return NoteDetailState(this.appBarTitle);
   }
 }
 
 class NoteDetailState extends State<NoteDetail> {
   static var _priorities = ["High", "Low"];
+  String appBarTitle;
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   var _current_priority = _priorities[0];
+
+  NoteDetailState(this.appBarTitle);
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
     // TODO: implement build
-    return Scaffold(
+    return WillPopScope(
+    onWillPop:(){
+      //Define what happens when user press back on device
+      moveToLastScreen();
+    },
+    child:Scaffold(
         appBar: AppBar(
-          title: Text("Edit Note"),
+          title: Text(appBarTitle),
+          leading: IconButton(
+            icon:Icon(Icons.arrow_back_ios),
+            onPressed:(){
+              //Define what happens when user press back in AppBar
+              moveToLastScreen();
+            }
+            ),
         ),
+
         body: Padding(
           padding: EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
           child: ListView(
@@ -120,6 +139,9 @@ class NoteDetailState extends State<NoteDetail> {
               )
             ],
           ),
-        ));
+        )));
+  }
+  void moveToLastScreen(){
+    Navigator.pop(context);
   }
 }
